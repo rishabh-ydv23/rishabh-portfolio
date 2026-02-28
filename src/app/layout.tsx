@@ -15,12 +15,13 @@ export const metadata: Metadata = {
 };
 
 const navLinks = [
-  { href: "#about", label: "about" },
-  { href: "#skills", label: "skills" },
-  { href: "#projects", label: "projects" },
+  { href: "#about",        label: "about" },
+  { href: "#skills",       label: "skills" },
+  { href: "#projects",     label: "projects" },
   { href: "#certifications", label: "certs" },
-  { href: "#education", label: "edu" },
-  { href: "#contact", label: "contact" },
+  { href: "#achievements", label: "achieve" },
+  { href: "#education",    label: "edu" },
+  { href: "#contact",      label: "contact" },
 ];
 
 export default function RootLayout({

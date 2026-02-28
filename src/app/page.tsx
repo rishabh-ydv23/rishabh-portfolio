@@ -136,25 +136,60 @@ const skills = [
   },
 ];
 
-const projects = [
+const allProjectsData = [
   {
-    label: "Full-Stack",
+    category: "academic",
+    label: "Academic",
     title: "VaxCare Portal",
-    description:
-      "Vaccine management system with appointment booking, vaccination tracking, and certificate generation. JWT-based role authentication with an admin dashboard and automated CRUD flows.",
+    description: "An online system to manage vaccine appointments, track availability, and send reminders. JWT-based role authentication with admin dashboard.",
     tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "Leaflet", "SendGrid"],
     live: "https://vaxcare-portal-frontend.onrender.com/",
     github: "https://github.com/rishabh-ydv23/Smart-Vaccine-System",
   },
   {
-    label: "E-Commerce",
+    category: "freelance",
+    label: "Freelance",
+    title: "Ex-Servicemen Association",
+    description: "A responsive web platform for Indian Army, Navy, and Air Force veterans. Provides updates, events, and resources for ex-servicemen and their families.",
+    tech: ["React.js", "Node.js", "Express.js", "MongoDB"],
+    live: "https://ex-servicemen-frontend.onrender.com/",
+    github: "https://github.com/rishabh-ydv23/Ex-Servicemen-Association",
+  },
+  {
+    category: "personal",
+    label: "Personal",
+    title: "Rishabh Portfolio",
+    description: "Personal developer portfolio built with Next.js, Tailwind CSS, and Framer Motion showcasing projects, freelance work, and technical skills.",
+    tech: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
+    live: "",
+    github: "https://github.com/rishabh-ydv23/rishabh-portfolio",
+  },
+  {
+    category: "personal",
+    label: "Personal",
     title: "Forever E-Commerce",
-    description:
-      "Responsive e-commerce platform with cart, wishlist, category browsing, and an admin dashboard for product and order management. Includes file uploads and JWT authentication.",
-    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "Multer"],
+    description: "A responsive clothing e-commerce website featuring product collections, detail pages, shopping cart functionality, and a modern UI.",
+    tech: ["React.js", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "JWT"],
     live: "https://ecommerce-website-green-six.vercel.app/",
     github: "https://github.com/rishabh-ydv23/Forever-Ecommerce-website",
   },
+  {
+    category: "other",
+    label: "Other",
+    title: "Param Portfolio",
+    description: "A personal portfolio website built for a friend, showcasing their work and skills with a clean modern design.",
+    tech: ["React.js", "Tailwind CSS", "Framer Motion"],
+    live: "https://param-portfolio-one.vercel.app/",
+    github: "https://github.com/rishabh-ydv23/paramPortfolio",
+  },
+];
+
+const PROJECT_CATS = [
+  { key: "all",       label: "All" },
+  { key: "academic",  label: "Academic" },
+  { key: "freelance", label: "Freelance" },
+  { key: "personal",  label: "Personal" },
+  { key: "other",     label: "Other" },
 ];
 
 const certifications = [
@@ -185,6 +220,104 @@ const education = [
     location: "Bhagwant Nagar, Unnao",
   },
 ];
+
+function ProjectsSection() {
+  const [activeCat, setActiveCat] = useState("all");
+
+  const filtered = activeCat === "all"
+    ? allProjectsData
+    : allProjectsData.filter((p) => p.category === activeCat);
+
+  return (
+    <section id="projects" className="mb-28">
+      <FadeIn>
+        <p className="text-xs font-mono text-emerald-400 tracking-[0.3em] uppercase mb-2 flex items-center gap-2">
+          <span className="inline-block w-4 h-px bg-emerald-400" />
+          03 / projects
+        </p>
+        <h2 className="text-3xl sm:text-4xl font-bold text-white font-mono mb-3">Projects</h2>
+        <p className="text-slate-500 text-sm mb-8">Things I&apos;ve built across different domains.</p>
+
+        {/* ── Pill filters ── */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {PROJECT_CATS.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => setActiveCat(cat.key)}
+              className={`px-5 py-2 text-[12px] font-semibold rounded-full transition-all duration-200 ${
+                activeCat === cat.key
+                  ? "bg-emerald-400 text-black shadow-lg shadow-emerald-400/20"
+                  : "border border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-200 bg-transparent"
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+      </FadeIn>
+
+      {/* ── Cards grid ── */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {filtered.map((p, idx) => (
+          <FadeIn key={p.title} delay={idx * 0.07}>
+            <div className="group h-full border border-slate-800 hover:border-emerald-400/40 bg-slate-900/50 hover:bg-slate-900/80 transition-all duration-300 p-5 rounded-xl backdrop-blur-sm flex flex-col">
+
+              {/* Top: icon placeholder + title + links */}
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="flex items-center gap-3">
+                  {/* Icon box */}
+                  <div className="w-10 h-10 rounded-lg bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center shrink-0 text-emerald-400">
+                    <Code2 size={16} />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-sm leading-snug">{p.title}</h3>
+                    <span className="text-[10px] text-emerald-400/70 uppercase tracking-widest">{p.label}</span>
+                  </div>
+                </div>
+                <div className="flex gap-1.5 shrink-0 pt-0.5">
+                  {p.github && (
+                    <a href={p.github} target="_blank" rel="noreferrer"
+                      className="text-slate-600 hover:text-emerald-400 transition-colors">
+                      <Github size={15} />
+                    </a>
+                  )}
+                  {p.live && (
+                    <a href={p.live} target="_blank" rel="noreferrer"
+                      className="text-slate-600 hover:text-emerald-400 transition-colors">
+                      <ArrowUpRight size={15} />
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {/* Divider line (like progress bar in screenshot) */}
+              <div className="w-full h-px bg-slate-800 mb-3 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-emerald-400 to-emerald-400/0 w-3/4" />
+              </div>
+
+              {/* Description */}
+              <p className="text-slate-400 text-xs leading-relaxed mb-4 flex-1">{p.description}</p>
+
+              {/* Tech tags */}
+              <div className="flex flex-wrap gap-1.5">
+                {p.tech.slice(0, 4).map((t) => (
+                  <span key={t} className="text-[10px] font-mono text-emerald-400/70 bg-emerald-400/5 border border-emerald-400/15 px-2 py-0.5 rounded-full">
+                    {t}
+                  </span>
+                ))}
+                {p.tech.length > 4 && (
+                  <span className="text-[10px] font-mono text-slate-500 px-2 py-0.5">
+                    +{p.tech.length - 4}
+                  </span>
+                )}
+              </div>
+            </div>
+          </FadeIn>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
   const typed = useTyping([
@@ -420,62 +553,7 @@ export default function Home() {
         </section>
 
         {/* ── PROJECTS ── */}
-        <section id="projects" className="mb-28">
-          <FadeIn>
-            <SectionHeading label="03 / projects" title="Featured Projects" />
-          </FadeIn>
-          <div className="space-y-6">
-            {projects.map((p, idx) => (
-              <FadeIn key={p.title} delay={idx * 0.1}>
-                <div className="group border border-slate-800 hover:border-emerald-400/40 bg-slate-900/40 hover:bg-slate-900/70 transition-all duration-300 p-7 rounded-sm backdrop-blur-sm">
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <div>
-                      <span className="text-xs text-emerald-400 border border-emerald-400/30 px-2.5 py-0.5 rounded-sm uppercase tracking-widest mr-3">
-                        {p.label}
-                      </span>
-                      <h3 className="inline text-xl font-bold text-white">
-                        {p.title}
-                      </h3>
-                    </div>
-                    <div className="flex gap-2 shrink-0">
-                      <a
-                        href={p.github}
-                        target="_blank"
-                        className="text-slate-500 hover:text-emerald-400 transition-colors"
-                        title="GitHub"
-                      >
-                        <Github size={18} />
-                      </a>
-                      <a
-                        href={p.live}
-                        target="_blank"
-                        className="text-slate-500 hover:text-emerald-400 transition-colors"
-                        title="Live"
-                      >
-                        <ArrowUpRight size={18} />
-                      </a>
-                    </div>
-                  </div>
-
-                  <p className="text-slate-400 text-sm leading-relaxed mb-5">
-                    {p.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2">
-                    {p.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="text-xs font-mono text-emerald-400/80 bg-emerald-400/5 border border-emerald-400/20 px-2.5 py-1 rounded-sm"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </section>
+        <ProjectsSection />
 
         {/* ── CERTIFICATIONS ── */}
         <section id="certifications" className="mb-28">
@@ -504,10 +582,80 @@ export default function Home() {
           </FadeIn>
         </section>
 
+        {/* ── ACHIEVEMENTS ── */}
+        <section id="achievements" className="mb-28">
+          <FadeIn>
+            <SectionHeading label="05 / achievements" title="Achievements" />
+            <div className="grid gap-4 sm:grid-cols-2">
+              {/* DSA Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4 }}
+                className="border border-slate-800 hover:border-emerald-400/40 bg-slate-900/40 hover:bg-slate-900/70 transition-all duration-300 p-6 rounded-sm backdrop-blur-sm"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="shrink-0 w-12 h-12 border border-emerald-400/30 bg-emerald-400/5 rounded-sm flex items-center justify-center text-emerald-400 font-mono font-bold text-sm">
+                    200+
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-sm mb-1">DSA Problems Solved</h3>
+                    <p className="text-slate-400 text-xs leading-relaxed mb-3">
+                      Solved 200+ DSA problems across multiple platforms since March 2025.
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {["LeetCode", "GeeksforGeeks", "HackerRank"].map((p) => (
+                        <span key={p} className="text-[10px] font-mono text-emerald-400/70 bg-emerald-400/5 border border-emerald-400/15 px-2 py-0.5 rounded-sm">
+                          {p}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+              {/* HackerRank Stars Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                className="border border-slate-800 hover:border-emerald-400/40 bg-slate-900/40 hover:bg-slate-900/70 transition-all duration-300 p-6 rounded-sm backdrop-blur-sm"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="shrink-0 w-12 h-12 border border-amber-400/30 bg-amber-400/5 rounded-sm flex items-center justify-center text-amber-400 font-bold text-lg">
+                    ★
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-sm mb-1">HackerRank Ratings</h3>
+                    <p className="text-slate-400 text-xs leading-relaxed mb-3">
+                      Earned top star ratings across multiple languages on HackerRank.
+                    </p>
+                    <div className="space-y-1.5">
+                      {[
+                        { lang: "C++",    stars: 5 },
+                        { lang: "SQL",    stars: 4 },
+                        { lang: "Python", stars: 4 },
+                      ].map(({ lang, stars }) => (
+                        <div key={lang} className="flex items-center gap-3">
+                          <span className="text-[11px] text-slate-400 font-mono w-12">{lang}</span>
+                          <span className="text-xs tracking-widest text-amber-400">
+                            {"★".repeat(stars)}{"☆".repeat(5 - stars)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </FadeIn>
+        </section>
+
         {/* ── EDUCATION ── */}
         <section id="education" className="mb-28">
           <FadeIn>
-            <SectionHeading label="05 / education" title="Education" />
+            <SectionHeading label="06 / education" title="Education" />
             <div className="space-y-4">
               {education.map((edu, idx) => (
                 <FadeIn key={idx} delay={idx * 0.1}>
@@ -531,7 +679,7 @@ export default function Home() {
         {/* ── TRAINING ── */}
         <section id="training" className="mb-28">
           <FadeIn>
-            <SectionHeading label="06 / training" title="Summer Training" />
+            <SectionHeading label="07 / training" title="Summer Training" />
             <div className="border border-slate-800 bg-slate-900/40 rounded-sm p-7 backdrop-blur-sm">
               <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
@@ -575,7 +723,7 @@ export default function Home() {
         {/* ── CONTACT ── */}
         <section id="contact" className="mb-16">
           <FadeIn>
-            <SectionHeading label="07 / contact" title="Get In Touch" />
+            <SectionHeading label="08 / contact" title="Get In Touch" />
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="border border-slate-800 bg-slate-900/40 rounded-sm p-7 backdrop-blur-sm">
                 <p className="text-slate-400 text-sm leading-relaxed mb-6">
