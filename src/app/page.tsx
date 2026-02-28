@@ -233,7 +233,7 @@ const currentlyLearning = [
 ];
 
 const timeline = [
-  { year: "2019", event: "Started High School Journey", detail: "Foundation in CS fundamentals" },
+  { year: "2022", event: "Class 12 Foundation", detail: "Strong foundation in Computer Science" },
   { year: "2023", event: "BTech CSE @ LPU", detail: "Deep dive into CS core subjects" },
   { year: "2024", event: "Full-Stack Development", detail: "React, Node.js, MongoDB projects" },
   { year: "2025", event: "Freelance Work & Cloud", detail: "Real-world projects, Oracle Certified" },
