@@ -458,7 +458,7 @@ export default function Home() {
             className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-slate-800"
           >
             {[
-              { n: "2+", label: "Projects Shipped" },
+              { n: "5+", label: "Projects Shipped" },
               { n: "5+", label: "Certifications" },
               { n: "6+", label: "Languages" },
               { n: "3rd", label: "Year BTech CSE" },
