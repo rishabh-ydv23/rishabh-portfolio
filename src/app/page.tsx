@@ -233,8 +233,6 @@ export default function Home() {
                 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-none tracking-tight mb-4"
               >
                 Rishabh
-                <br />
-                <span className="text-emerald-400">Yadav</span>
               </motion.h1>
 
               <motion.div
@@ -281,33 +279,37 @@ export default function Home() {
               transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="shrink-0 relative"
             >
-              {/* Decorative corner brackets */}
-              <div className="relative w-[200px] sm:w-[240px] lg:w-[260px]">
-                {/* Top-left bracket */}
-                <span className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-emerald-400 z-10" />
-                {/* Bottom-right bracket */}
-                <span className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-emerald-400 z-10" />
-                {/* Top-right dot */}
-                <span className="absolute -top-1.5 -right-1.5 w-2 h-2 bg-emerald-400 rounded-full z-10" />
-                {/* Bottom-left dot */}
-                <span className="absolute -bottom-1.5 -left-1.5 w-2 h-2 bg-emerald-400/50 rounded-full z-10" />
-
-                {/* Glow behind image */}
-                <div className="absolute inset-0 bg-emerald-400/10 blur-2xl rounded-full scale-90 -z-10" />
-
-                {/* Photo */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/ris-removebg-preview.png"
-                  alt="Rishabh Yadav"
-                  className="w-full object-cover border border-slate-700/60 bg-slate-900/60"
-                  style={{ imageRendering: "crisp-edges" }}
-                />
-
-                {/* Terminal label below photo */}
-                <div className="mt-3 border border-slate-700/60 bg-slate-900/60 px-3 py-1.5 flex items-center gap-2 backdrop-blur-sm">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-[11px] text-emerald-400 tracking-widest">rishabh.yadav</span>
+              {/* Photo card */}
+              <div className="relative w-[200px] sm:w-[240px] lg:w-[270px]">
+                {/* Corner brackets */}
+                <span className="absolute -top-3 -left-3 w-7 h-7 border-t-2 border-l-2 border-emerald-400 z-20" />
+                <span className="absolute -bottom-3 -right-3 w-7 h-7 border-b-2 border-r-2 border-emerald-400 z-20" />
+                <span className="absolute -top-1.5 -right-1.5 w-2.5 h-2.5 bg-emerald-400 rounded-full z-20" />
+                <span className="absolute -bottom-1.5 -left-1.5 w-2.5 h-2.5 bg-emerald-400/40 rounded-full z-20" />
+                {/* Glow */}
+                <div className="absolute -inset-4 bg-emerald-400/8 blur-3xl rounded-full -z-10" />
+                {/* Image wrapper with dark bg to kill white background */}
+                <div
+                  className="relative overflow-hidden border border-slate-700/50"
+                  style={{ background: "linear-gradient(160deg,#0f1a18 0%,#0a1512 60%,#091110 100%)" }}
+                >
+                  {/* Bottom fade overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#091110]/80 to-transparent z-10 pointer-events-none" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/ris-removebg-preview.png"
+                    alt="Rishabh"
+                    className="w-full object-cover object-top"
+                    style={{
+                      mixBlendMode: "luminosity",
+                      filter: "contrast(1.1) brightness(0.88) saturate(0.6)",
+                    }}
+                  />
+                </div>
+                {/* Terminal status bar */}
+                <div className="border border-slate-700/60 border-t-0 bg-[#0a0e0f]/90 px-3 py-2 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                  <span className="text-[11px] text-emerald-400 tracking-widest">rishabh</span>
                   <span className="ml-auto text-[10px] text-slate-600">LPU · CSE</span>
                 </div>
               </div>
@@ -645,7 +647,7 @@ export default function Home() {
         {/* ── FOOTER ── */}
         <footer className="border-t border-slate-800 pt-8 pb-4 text-center">
           <p className="text-xs text-slate-600 font-mono">
-            © {new Date().getFullYear()} Rishabh Yadav · Built with Next.js & Tailwind CSS
+            © {new Date().getFullYear()} Rishabh · Built with Next.js & Tailwind CSS
           </p>
         </footer>
       </div>

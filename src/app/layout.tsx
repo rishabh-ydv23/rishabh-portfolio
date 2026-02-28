@@ -9,9 +9,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rishabh Yadav | Software Developer",
+  title: "Rishabh | Software Developer",
   description:
-    "Portfolio of Rishabh Yadav — 3rd year B.Tech CSE student, full-stack developer, and problem solver.",
+    "Portfolio of Rishabh — 3rd year B.Tech CSE student, full-stack developer, and problem solver.",
 };
 
 const navLinks = [
