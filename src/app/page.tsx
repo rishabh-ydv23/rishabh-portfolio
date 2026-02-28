@@ -142,8 +142,8 @@ const skills = [
 
 const allProjectsData = [
   {
-    category: "academic",
-    label: "Academic",
+    category: "personal",
+    label: "Personal",
     title: "VaxCare Portal",
     description: "An online system to manage vaccine appointments, track availability, and send reminders. JWT-based role authentication with admin dashboard.",
     tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "Leaflet", "SendGrid"],
@@ -151,8 +151,8 @@ const allProjectsData = [
     github: "https://github.com/rishabh-ydv23/Smart-Vaccine-System",
   },
   {
-    category: "freelance",
-    label: "Freelance",
+    category: "client-work",
+    label: "Client Work",
     title: "Ex-Servicemen Association",
     description: "A responsive web platform for Indian Army, Navy, and Air Force veterans. Provides updates, events, and resources for ex-servicemen and their families.",
     tech: ["React.js", "Node.js", "Express.js", "MongoDB"],
@@ -178,8 +178,8 @@ const allProjectsData = [
     github: "https://github.com/rishabh-ydv23/Forever-Ecommerce-website",
   },
   {
-    category: "other",
-    label: "Other",
+    category: "experiments",
+    label: "Experiments",
     title: "Param Portfolio",
     description: "A personal portfolio website built for a friend, showcasing their work and skills with a clean modern design.",
     tech: ["React.js", "Tailwind CSS", "Framer Motion"],
@@ -189,11 +189,10 @@ const allProjectsData = [
 ];
 
 const PROJECT_CATS = [
-  { key: "all",       label: "All" },
-  { key: "academic",  label: "Academic" },
-  { key: "freelance", label: "Freelance" },
-  { key: "personal",  label: "Personal" },
-  { key: "other",     label: "Other" },
+  { key: "all",          label: "All" },
+  { key: "personal",     label: "Personal" },
+  { key: "client-work",  label: "Client Work" },
+  { key: "experiments",  label: "Experiments" },
 ];
 
 const certifications = [
