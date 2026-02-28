@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { ContactForm } from "@/components/contact-form";
 import {
   Github,
   ExternalLink,
@@ -18,6 +19,9 @@ import {
   Wrench,
   Cpu,
   ArrowUpRight,
+  Zap,
+  BookOpen,
+  Award,
 } from "lucide-react";
 
 /* ─── Typing animation hook ─── */
@@ -221,6 +225,20 @@ const education = [
   },
 ];
 
+const currentlyLearning = [
+  { icon: <BookOpen size={18} />, title: "Next.js Optimization", desc: "Advanced patterns & performance tuning" },
+  { icon: <Code2 size={18} />, title: "System Design", desc: "Scalable architecture & database design" },
+  { icon: <Zap size={18} />, title: "Cloud Deployment", desc: "AWS, Docker & CI/CD pipelines" },
+  { icon: <Award size={18} />, title: "Advanced DSA", desc: "Graph algorithms & DP optimization" },
+];
+
+const timeline = [
+  { year: "2019", event: "Started High School Journey", detail: "Foundation in CS fundamentals" },
+  { year: "2023", event: "BTech CSE @ LPU", detail: "Deep dive into CS core subjects" },
+  { year: "2024", event: "Full-Stack Development", detail: "React, Node.js, MongoDB projects" },
+  { year: "2025", event: "Freelance Work & Cloud", detail: "Real-world projects, Oracle Certified" },
+];
+
 function ProjectsSection() {
   const [activeCat, setActiveCat] = useState("all");
 
@@ -328,7 +346,7 @@ export default function Home() {
   ]);
 
   return (
-    <main className="min-h-screen bg-[#0a0e0f] text-slate-300 font-mono selection:bg-emerald-400/30">
+    <main className="min-h-screen bg-[#0a0e0f] dark:bg-[#0a0e0f] text-slate-300 font-mono selection:bg-emerald-400/30">
       {/* Grid background */}
       <div
         aria-hidden
@@ -341,6 +359,15 @@ export default function Home() {
       />
 
       <div className="relative z-10 mx-auto max-w-5xl px-5 sm:px-8 py-8">
+        {/* ── AVAILABILITY BADGE ── */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-400/30 bg-emerald-400/5 text-[12px] text-emerald-400 font-mono tracking-widest"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          OPEN TO INTERNSHIPS
+        </motion.div>
         {/* ── HERO ── */}
         <section className="min-h-[88vh] flex flex-col justify-center pb-12">
           {/* Two-column: text left, photo right */}
@@ -720,10 +747,56 @@ export default function Home() {
           </FadeIn>
         </section>
 
+        {/* ── CURRENTLY LEARNING ── */}
+        <section id="learning" className="mb-28">
+          <FadeIn>
+            <SectionHeading label="08 / learning" title="Currently Learning" />
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {currentlyLearning.map((item, idx) => (
+                <FadeIn key={item.title} delay={idx * 0.07}>
+                  <div className="border border-slate-800 hover:border-slate-700 bg-slate-900/40 hover:bg-slate-900/60 transition-all p-4 rounded-sm flex flex-col h-full">
+                    <div className="text-emerald-400 mb-3">{item.icon}</div>
+                    <h3 className="text-white font-bold text-sm mb-1">{item.title}</h3>
+                    <p className="text-slate-500 text-xs leading-relaxed flex-1">{item.desc}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </FadeIn>
+        </section>
+
+        {/* ── TIMELINE ── */}
+        <section id="timeline" className="mb-28">
+          <FadeIn>
+            <SectionHeading label="09 / timeline" title="My Journey" />
+            <div className="space-y-0">
+              {timeline.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  className="flex gap-6 pb-8 border-l-2 border-emerald-400/20 hover:border-emerald-400/50 pl-6 ml-3 last:pb-0 transition-colors"
+                >
+                  <div className="absolute -left-3 w-6 h-6 rounded-full bg-emerald-400/20 border-2 border-emerald-400 flex items-center justify-center">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  </div>
+                  <div className="flex-1 pt-1">
+                    <p className="text-emerald-400 font-bold text-sm">{item.year}</p>
+                    <h3 className="text-white font-bold mt-1">{item.event}</h3>
+                    <p className="text-slate-500 text-sm mt-1">{item.detail}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </FadeIn>
+        </section>
+
         {/* ── CONTACT ── */}
         <section id="contact" className="mb-16">
           <FadeIn>
-            <SectionHeading label="08 / contact" title="Get In Touch" />
+            <SectionHeading label="10 / contact" title="Get In Touch" />
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="border border-slate-800 bg-slate-900/40 rounded-sm p-7 backdrop-blur-sm">
                 <p className="text-slate-400 text-sm leading-relaxed mb-6">
@@ -766,28 +839,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="border border-slate-800 bg-slate-900/40 rounded-sm p-7 backdrop-blur-sm flex flex-col justify-between">
-                <div>
-                  <p className="text-emerald-400 text-xs tracking-widest uppercase mb-3">
-                    resume
-                  </p>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                    View or download my full resume to see my complete work
-                    history, projects, and certifications.
-                  </p>
-                </div>
-                <Button
-                  asChild
-                  className="bg-emerald-400 text-black hover:bg-emerald-300 font-bold rounded-none h-11 text-sm tracking-wide w-full justify-center gap-2 transition-all"
-                >
-                  <Link
-                    href="https://docs.google.com/document/d/1FiwIMMx5VnvLdUpMgC-XZovc_bzwvXkL/edit?usp=sharing&ouid=102825018389697368109&rtpof=true&sd=true"
-                    target="_blank"
-                  >
-                    <FileText size={15} /> View Full Resume
-                  </Link>
-                </Button>
-              </div>
+              <ContactForm />
             </div>
           </FadeIn>
         </section>
