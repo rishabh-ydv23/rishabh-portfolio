@@ -72,7 +72,7 @@ function FadeIn({
   className?: string;
 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: false, margin: "-80px" });
   return (
     <motion.div
       ref={ref}
@@ -593,7 +593,7 @@ export default function Home() {
                   initial={{ opacity: 0, x: -16 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.08 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   className="flex items-center justify-between gap-4 px-6 py-4 hover:bg-slate-800/40 transition-colors"
                 >
                   <div className="flex items-center gap-4">
@@ -618,7 +618,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ duration: 0.4 }}
                 className="border border-slate-800 hover:border-emerald-400/40 bg-slate-900/40 hover:bg-slate-900/70 transition-all duration-300 p-6 rounded-sm backdrop-blur-sm"
               >
@@ -645,7 +645,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ duration: 0.4, delay: 0.1 }}
                 className="border border-slate-800 hover:border-emerald-400/40 bg-slate-900/40 hover:bg-slate-900/70 transition-all duration-300 p-6 rounded-sm backdrop-blur-sm"
               >
@@ -776,7 +776,7 @@ export default function Home() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   className="flex gap-6 pb-8 border-l-2 border-emerald-400/20 hover:border-emerald-400/50 pl-6 ml-3 last:pb-0 transition-colors"
                 >
                   <div className="absolute -left-3 w-6 h-6 rounded-full bg-emerald-400/20 border-2 border-emerald-400 flex items-center justify-center">
