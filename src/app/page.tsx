@@ -1,404 +1,653 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink, Mail, Linkedin, FileText } from "lucide-react";
+import {
+  Github,
+  ExternalLink,
+  Mail,
+  Linkedin,
+  FileText,
+  Terminal,
+  ChevronRight,
+  Code2,
+  Database,
+  Layers,
+  Wrench,
+  Cpu,
+  ArrowUpRight,
+} from "lucide-react";
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-};
+/* ─── Typing animation hook ─── */
+function useTyping(words: string[], speed = 80, pause = 1800) {
+  const [displayed, setDisplayed] = useState("");
+  const [wordIdx, setWordIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = words[wordIdx];
+    const timeout = setTimeout(
+      () => {
+        if (!deleting) {
+          setDisplayed(current.slice(0, charIdx + 1));
+          if (charIdx + 1 === current.length) {
+            setTimeout(() => setDeleting(true), pause);
+          } else {
+            setCharIdx((c) => c + 1);
+          }
+        } else {
+          setDisplayed(current.slice(0, charIdx - 1));
+          if (charIdx - 1 === 0) {
+            setDeleting(false);
+            setCharIdx(0);
+            setWordIdx((i) => (i + 1) % words.length);
+          } else {
+            setCharIdx((c) => c - 1);
+          }
+        }
+      },
+      deleting ? speed / 2 : speed
+    );
+    return () => clearTimeout(timeout);
+  }, [charIdx, deleting, wordIdx, words, speed, pause]);
+
+  return displayed;
+}
+
+/* ─── Fade-in section wrapper ─── */
+function FadeIn({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ─── Section heading ─── */
+function SectionHeading({
+  label,
+  title,
+}: {
+  label: string;
+  title: string;
+}) {
+  return (
+    <div className="mb-10">
+      <p className="text-xs font-mono text-emerald-400 tracking-[0.3em] uppercase mb-2 flex items-center gap-2">
+        <span className="inline-block w-4 h-px bg-emerald-400" />
+        {label}
+      </p>
+      <h2 className="text-3xl sm:text-4xl font-bold text-white font-mono">
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+const skills = [
+  {
+    icon: <Code2 size={20} />,
+    title: "Languages",
+    items: ["C++", "JavaScript", "Java", "Python", "C", "PHP"],
+  },
+  {
+    icon: <Layers size={20} />,
+    title: "Frontend",
+    items: ["React.js", "Next.js", "Tailwind CSS", "HTML5 / CSS3"],
+  },
+  {
+    icon: <Terminal size={20} />,
+    title: "Backend",
+    items: ["Node.js", "Express.js", "REST APIs", "Socket.IO"],
+  },
+  {
+    icon: <Database size={20} />,
+    title: "Databases",
+    items: ["MongoDB", "MySQL / SQL", "phpMyAdmin"],
+  },
+  {
+    icon: <Wrench size={20} />,
+    title: "Tools",
+    items: ["Git & GitHub", "VS Code", "Postman", "Figma"],
+  },
+  {
+    icon: <Cpu size={20} />,
+    title: "Core CS",
+    items: ["DSA", "OOP", "DBMS", "Operating Systems"],
+  },
+];
+
+const projects = [
+  {
+    label: "Full-Stack",
+    title: "VaxCare Portal",
+    description:
+      "Vaccine management system with appointment booking, vaccination tracking, and certificate generation. JWT-based role authentication with an admin dashboard and automated CRUD flows.",
+    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "Leaflet", "SendGrid"],
+    live: "https://vaxcare-portal-frontend.onrender.com/",
+    github: "https://github.com/rishabh-ydv23/Smart-Vaccine-System",
+  },
+  {
+    label: "E-Commerce",
+    title: "Forever E-Commerce",
+    description:
+      "Responsive e-commerce platform with cart, wishlist, category browsing, and an admin dashboard for product and order management. Includes file uploads and JWT authentication.",
+    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "Multer"],
+    live: "https://ecommerce-website-green-six.vercel.app/",
+    github: "https://github.com/rishabh-ydv23/Forever-Ecommerce-website",
+  },
+];
+
+const certifications = [
+  { org: "Oracle", name: "OCI 2025 Certified Generative AI Professional" },
+  { org: "Apna College", name: "Delta Batch – Full Stack Development" },
+  { org: "Oracle", name: "OCI 2025 Certified AI Foundation Associate" },
+  { org: "NPTEL / IIT KGP", name: "Cloud Computing (8-week course)" },
+  { org: "IBM", name: "Introduction to Hardware and Operating Systems" },
+];
+
+const education = [
+  {
+    school: "Lovely Professional University",
+    degree: "B.Tech — Computer Science & Engineering",
+    info: "CGPA: 7.23  ·  2023 – Present",
+    location: "Punjab, India",
+  },
+  {
+    school: "U.S International School",
+    degree: "Intermediate (Class XII)",
+    info: "72.8%  ·  2021 – 2022",
+    location: "Bhagwant Nagar, Unnao",
+  },
+  {
+    school: "U.S International School",
+    degree: "Matriculation (Class X)",
+    info: "75.8%  ·  2019 – 2020",
+    location: "Bhagwant Nagar, Unnao",
+  },
+];
 
 export default function Home() {
+  const typed = useTyping([
+    "Full-Stack Developer",
+    "Problem Solver",
+    "CS Student @ LPU",
+    "Open Source Enthusiast",
+  ]);
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white via-slate-50 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
-      <div className="mx-auto max-w-4xl px-6 py-16 sm:px-8">
-        {/* Hero Section */}
-        <section className="mb-32 text-center pt-8">
+    <main className="min-h-screen bg-[#0a0e0f] text-slate-300 font-mono selection:bg-emerald-400/30">
+      {/* Grid background */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(16,185,129,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.04) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-5xl px-5 sm:px-8 py-8">
+        {/* ── HERO ── */}
+        <section className="min-h-[88vh] flex flex-col justify-center pb-12">
+          {/* Two-column: text left, photo right */}
+          <div className="flex flex-col-reverse sm:flex-row items-center sm:items-start gap-10 sm:gap-16">
+
+            {/* ── Left: text content ── */}
+            <div className="flex-1 flex flex-col">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              >
+                <p className="text-emerald-400 text-sm tracking-widest uppercase mb-6 flex items-center gap-2">
+                  <span className="inline-block w-8 h-px bg-emerald-400" />
+                  Hello, World
+                </p>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-none tracking-tight mb-4"
+              >
+                Rishabh
+                <br />
+                <span className="text-emerald-400">Yadav</span>
+              </motion.h1>
+
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="flex items-center gap-3 mb-10"
+              >
+                <span className="text-slate-500 text-lg sm:text-xl">//</span>
+                <span className="text-lg sm:text-xl text-slate-300 min-w-[240px]">
+                  {typed}
+                  <span className="animate-pulse text-emerald-400">_</span>
+                </span>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45, duration: 0.5 }}
+                className="flex flex-wrap gap-3"
+              >
+                <Button
+                  asChild
+                  className="bg-emerald-400 text-black hover:bg-emerald-300 font-bold rounded-none px-6 h-11 text-sm tracking-wide transition-all"
+                >
+                  <a href="#projects">
+                    View Projects <ChevronRight size={16} />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-slate-600 text-slate-300 hover:border-emerald-400 hover:text-emerald-400 bg-transparent rounded-none px-6 h-11 text-sm tracking-wide transition-all"
+                >
+                  <a href="#contact">Contact Me</a>
+                </Button>
+              </motion.div>
+            </div>
+
+            {/* ── Right: photo ── */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="shrink-0 relative"
+            >
+              {/* Decorative corner brackets */}
+              <div className="relative w-[200px] sm:w-[240px] lg:w-[260px]">
+                {/* Top-left bracket */}
+                <span className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-emerald-400 z-10" />
+                {/* Bottom-right bracket */}
+                <span className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-emerald-400 z-10" />
+                {/* Top-right dot */}
+                <span className="absolute -top-1.5 -right-1.5 w-2 h-2 bg-emerald-400 rounded-full z-10" />
+                {/* Bottom-left dot */}
+                <span className="absolute -bottom-1.5 -left-1.5 w-2 h-2 bg-emerald-400/50 rounded-full z-10" />
+
+                {/* Glow behind image */}
+                <div className="absolute inset-0 bg-emerald-400/10 blur-2xl rounded-full scale-90 -z-10" />
+
+                {/* Photo */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/ris-removebg-preview.png"
+                  alt="Rishabh Yadav"
+                  className="w-full object-cover border border-slate-700/60 bg-slate-900/60"
+                  style={{ imageRendering: "crisp-edges" }}
+                />
+
+                {/* Terminal label below photo */}
+                <div className="mt-3 border border-slate-700/60 bg-slate-900/60 px-3 py-1.5 flex items-center gap-2 backdrop-blur-sm">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-[11px] text-emerald-400 tracking-widest">rishabh.yadav</span>
+                  <span className="ml-auto text-[10px] text-slate-600">LPU · CSE</span>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* Stats row */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.65, duration: 0.5 }}
+            className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-slate-800"
           >
-            <h1 className="text-5xl sm:text-7xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
-              Rishabh Yadav
-            </h1>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            <p className="text-2xl sm:text-3xl text-slate-700 dark:text-slate-200 mb-4">
-              3rd year B.Tech <span className="font-bold text-blue-600 dark:text-blue-400">CSE</span> Student
-            </p>
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              Full-Stack Developer | Problem Solver | Continuous Learner
-            </p>
+            {[
+              { n: "2+", label: "Projects Shipped" },
+              { n: "5+", label: "Certifications" },
+              { n: "6+", label: "Languages" },
+              { n: "3rd", label: "Year BTech CSE" },
+            ].map((s) => (
+              <div key={s.label}>
+                <p className="text-3xl font-bold text-white">{s.n}</p>
+                <p className="text-xs text-slate-500 tracking-wider uppercase mt-1">
+                  {s.label}
+                </p>
+              </div>
+            ))}
           </motion.div>
         </section>
 
-        {/* About Section */}
-        <motion.section
-          id="about"
-          className="mb-24 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 sm:p-10 shadow-md hover:shadow-lg transition-shadow"
-          {...fadeInUp}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-slate-900 dark:text-white">
-            About Me
-          </h2>
-          <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-            I am a passionate computer science student with strong foundations in
-            data structures, algorithms, object-oriented programming, and core
-            CS subjects such as DBMS, operating systems, and process management.
-            I enjoy building full‑stack applications, solving problems, and
-            continuously learning new technologies.
-          </p>
-        </motion.section>
-
-        {/* Skills Section */}
-        <motion.section
-          id="skills"
-          className="mb-24"
-          {...fadeInUp}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-slate-900 dark:text-white">
-            Skills
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "Programming Languages",
-                items: ["C++", "JavaScript", "C", "PHP", "Java", "Python"],
-              },
-              {
-                title: "Core Strengths",
-                items: [
-                  "Data Structures & Algorithms",
-                  "OOP",
-                  "DBMS",
-                  "Operating Systems & Process Management",
-                ],
-              },
-              {
-                title: "Backend Technologies",
-                items: ["Node.js", "Express.js", "REST APIs", "Socket.IO"],
-              },
-              {
-                title: "Frontend Technologies",
-                items: ["React.js", "Tailwind CSS", "HTML5", "CSS"],
-              },
-              {
-                title: "Databases",
-                items: ["MySQL / SQL / phpMyAdmin", "MongoDB"],
-              },
-              {
-                title: "Tools & Platforms",
-                items: ["Git, GitHub, VS Code", "Figma, Postman"],
-              },
-              {
-                title: "Operating Systems",
-                items: ["Windows", "Ubuntu"],
-              },
-              {
-                title: "Soft Skills",
-                items: [
-                  "Problem Solving",
-                  "Adaptability",
-                  "Self-Learning",
-                  "Logical Reasoning",
-                ],
-              },
-            ].map((category, idx) => (
-              <motion.div
-                key={idx}
-                className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 hover:shadow-md transition-shadow"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <h3 className="font-bold text-blue-600 dark:text-blue-400 mb-3">
-                  {category.title}
-                </h3>
-                <ul className="space-y-2">
-                  {category.items.map((item, i) => (
-                    <li
-                      key={i}
-                      className="text-slate-700 dark:text-slate-300 text-sm flex items-start gap-2"
-                    >
-                      <span className="text-blue-600 dark:text-blue-400 mt-1">
-                        →
-                      </span>
-                      {item}
-                    </li>
+        {/* ── ABOUT ── */}
+        <section id="about" className="mb-28">
+          <FadeIn>
+            <SectionHeading label="01 / about" title="About Me" />
+            <div className="grid sm:grid-cols-5 gap-10 items-start">
+              <div className="sm:col-span-3 space-y-4 text-slate-400 leading-relaxed text-[15px]">
+                <p>
+                  I&apos;m a 3rd-year Computer Science student at{" "}
+                  <span className="text-emerald-400 font-semibold">Lovely Professional University</span>,
+                  passionate about building full-stack products that solve real problems.
+                </p>
+                <p>
+                  I have strong foundations in{" "}
+                  <span className="text-white">data structures & algorithms</span>,
+                  object-oriented programming, and core CS subjects like DBMS and
+                  operating systems. I enjoy the intersection of clean code, great UX,
+                  and scalable architecture.
+                </p>
+                <p>
+                  Currently deepening my expertise in{" "}
+                  <span className="text-white">cloud platforms</span> and exploring
+                  generative AI integrations — certified by Oracle in both GenAI and AI
+                  Foundations.
+                </p>
+              </div>
+              <div className="sm:col-span-2">
+                <div className="border border-slate-700/60 bg-slate-900/50 rounded-sm p-5 backdrop-blur-sm">
+                  <p className="text-emerald-400 text-xs tracking-widest mb-4 uppercase">
+                    quick.info
+                  </p>
+                  {[
+                    { k: "location", v: "Punjab, India" },
+                    { k: "university", v: "LPU" },
+                    { k: "degree", v: "B.Tech CSE" },
+                    { k: "cgpa", v: "7.23" },
+                    { k: "status", v: "Open to opportunities" },
+                  ].map(({ k, v }) => (
+                    <div key={k} className="flex justify-between text-sm py-2 border-b border-slate-800 last:border-0">
+                      <span className="text-slate-500">{k}</span>
+                      <span className="text-slate-200">{v}</span>
+                    </div>
                   ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Projects Section */}
-        <motion.section
-          id="projects"
-          className="mb-24"
-          {...fadeInUp}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-slate-900 dark:text-white">
-            Projects
-          </h2>
-          <div className="space-y-6">
-            {[
-              {
-                title: "VaxCare Portal",
-                desc: "Full-stack vaccine management system with appointment booking, vaccination tracking, and certificate generation. JWT-based role authentication and admin dashboard with automated CRUD flow.",
-                tech: "React.js, Node.js, Express.js, MongoDB, Tailwind CSS, JWT, Leaflet, SendGrid",
-                live: "https://vaxcare-portal-frontend.onrender.com/",
-                github: "https://github.com/rishabh-ydv23/Smart-Vaccine-System",
-              },
-              {
-                title: "Forever E-Commerce Website",
-                desc: "Responsive e-commerce app with cart, wishlist, category browsing, and an admin dashboard for product/order management.",
-                tech: "React.js, Node.js, Express.js, MongoDB, JWT, Multer",
-                live: "https://ecommerce-website-green-six.vercel.app/",
-                github: "https://github.com/rishabh-ydv23/Forever-Ecommerce-website",
-              },
-            ].map((project, idx) => (
-              <motion.div
-                key={idx}
-                className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 hover:shadow-lg transition-shadow"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.15 }}
-                viewport={{ once: true }}
-              >
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">
-                  {project.title}
-                </h3>
-                <p className="text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
-                  {project.desc}
-                </p>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                  <span className="font-semibold">Tech Stack:</span> {project.tech}
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <Button asChild size="sm" className="gap-2">
-                    <Link href={project.live} target="_blank">
-                      <ExternalLink size={16} /> Live Preview
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="sm" className="gap-2">
-                    <Link href={project.github} target="_blank">
-                      <Github size={16} /> GitHub
-                    </Link>
-                  </Button>
                 </div>
-              </motion.div>
+              </div>
+            </div>
+          </FadeIn>
+        </section>
+
+        {/* ── SKILLS ── */}
+        <section id="skills" className="mb-28">
+          <FadeIn>
+            <SectionHeading label="02 / skills" title="Technical Skills" />
+          </FadeIn>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {skills.map((cat, idx) => (
+              <FadeIn key={cat.title} delay={idx * 0.07}>
+                <div className="group border border-slate-800 bg-slate-900/40 hover:border-emerald-400/50 hover:bg-slate-900/70 transition-all duration-300 p-5 rounded-sm backdrop-blur-sm h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-emerald-400">{cat.icon}</span>
+                    <h3 className="text-white font-bold text-sm tracking-wide uppercase">
+                      {cat.title}
+                    </h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {cat.items.map((item) => (
+                      <span
+                        key={item}
+                        className="text-xs text-slate-400 border border-slate-700 group-hover:border-slate-600 px-2.5 py-1 rounded-sm transition-colors"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </FadeIn>
             ))}
           </div>
-        </motion.section>
+        </section>
 
-        {/* Certifications Section */}
-        <motion.section
-          id="certifications"
-          className="mb-24"
-          {...fadeInUp}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-slate-900 dark:text-white">
-            Certifications
-          </h2>
-          <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8">
-            <ul className="space-y-3">
-              {[
-                "Oracle Cloud Infrastructure 2025 Certified Generative AI Professional | Oracle",
-                "Delta Batch – Full Stack Development | Apna College",
-                "Oracle Cloud Infrastructure 2025 Certified AI Foundation Associate | Oracle",
-                "Cloud Computing by IIT Kharagpur (8-week course) | NPTEL",
-                "Introduction to Hardware and Operating Systems | IBM",
-              ].map((cert, idx) => (
-                <motion.li
+        {/* ── PROJECTS ── */}
+        <section id="projects" className="mb-28">
+          <FadeIn>
+            <SectionHeading label="03 / projects" title="Featured Projects" />
+          </FadeIn>
+          <div className="space-y-6">
+            {projects.map((p, idx) => (
+              <FadeIn key={p.title} delay={idx * 0.1}>
+                <div className="group border border-slate-800 hover:border-emerald-400/40 bg-slate-900/40 hover:bg-slate-900/70 transition-all duration-300 p-7 rounded-sm backdrop-blur-sm">
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <div>
+                      <span className="text-xs text-emerald-400 border border-emerald-400/30 px-2.5 py-0.5 rounded-sm uppercase tracking-widest mr-3">
+                        {p.label}
+                      </span>
+                      <h3 className="inline text-xl font-bold text-white">
+                        {p.title}
+                      </h3>
+                    </div>
+                    <div className="flex gap-2 shrink-0">
+                      <a
+                        href={p.github}
+                        target="_blank"
+                        className="text-slate-500 hover:text-emerald-400 transition-colors"
+                        title="GitHub"
+                      >
+                        <Github size={18} />
+                      </a>
+                      <a
+                        href={p.live}
+                        target="_blank"
+                        className="text-slate-500 hover:text-emerald-400 transition-colors"
+                        title="Live"
+                      >
+                        <ArrowUpRight size={18} />
+                      </a>
+                    </div>
+                  </div>
+
+                  <p className="text-slate-400 text-sm leading-relaxed mb-5">
+                    {p.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {p.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="text-xs font-mono text-emerald-400/80 bg-emerald-400/5 border border-emerald-400/20 px-2.5 py-1 rounded-sm"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </section>
+
+        {/* ── CERTIFICATIONS ── */}
+        <section id="certifications" className="mb-28">
+          <FadeIn>
+            <SectionHeading label="04 / certifications" title="Certifications" />
+            <div className="border border-slate-800 bg-slate-900/40 rounded-sm divide-y divide-slate-800 backdrop-blur-sm">
+              {certifications.map((cert, idx) => (
+                <motion.div
                   key={idx}
-                  className="text-slate-700 dark:text-slate-300 flex items-start gap-3"
-                  initial={{ opacity: 0, x: -10 }}
+                  initial={{ opacity: 0, x: -16 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.1 }}
+                  transition={{ delay: idx * 0.08 }}
                   viewport={{ once: true }}
+                  className="flex items-center justify-between gap-4 px-6 py-4 hover:bg-slate-800/40 transition-colors"
                 >
-                  <span className="text-blue-600 dark:text-blue-400 font-bold mt-1">
-                    ✓
+                  <div className="flex items-center gap-4">
+                    <ChevronRight size={14} className="text-emerald-400 shrink-0" />
+                    <span className="text-slate-200 text-sm">{cert.name}</span>
+                  </div>
+                  <span className="text-xs text-slate-500 shrink-0 border border-slate-700 px-2.5 py-0.5 rounded-sm">
+                    {cert.org}
                   </span>
-                  {cert}
-                </motion.li>
+                </motion.div>
               ))}
-            </ul>
-          </div>
-        </motion.section>
+            </div>
+          </FadeIn>
+        </section>
 
-        {/* Education Section */}
-        <motion.section
-          id="education"
-          className="mb-24"
-          {...fadeInUp}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-slate-900 dark:text-white">
-            Education
-          </h2>
-          <div className="space-y-4">
-            {[
-              {
-                school: "Lovely Professional University",
-                degree: "Bachelor of Technology in Computer Science and Engineering",
-                info: "CGPA: 7.23 (2023 – Present)",
-                location: "Punjab, India",
-              },
-              {
-                school: "U.S International School",
-                degree: "Intermediate",
-                info: "Percentage: 72.8 (April 2021 – March 2022)",
-                location: "Bhagwant Nagar, Unnao",
-              },
-              {
-                school: "U.S International School",
-                degree: "Matriculation",
-                info: "Percentage: 75.8 (April 2019 – March 2020)",
-                location: "Bhagwant Nagar, Unnao",
-              },
-            ].map((edu, idx) => (
-              <motion.div
-                key={idx}
-                className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <h3 className="font-bold text-blue-600 dark:text-blue-400 text-lg">
-                  {edu.school}
-                </h3>
-                <p className="text-slate-900 dark:text-white font-semibold mt-1">
-                  {edu.degree}
-                </p>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">
-                  {edu.info}
-                </p>
-                <p className="text-slate-500 dark:text-slate-500 text-sm">
-                  📍 {edu.location}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+        {/* ── EDUCATION ── */}
+        <section id="education" className="mb-28">
+          <FadeIn>
+            <SectionHeading label="05 / education" title="Education" />
+            <div className="space-y-4">
+              {education.map((edu, idx) => (
+                <FadeIn key={idx} delay={idx * 0.1}>
+                  <div className="border border-slate-800 hover:border-slate-700 bg-slate-900/40 hover:bg-slate-900/60 transition-all p-6 rounded-sm flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+                    <div className="shrink-0 w-1 h-10 bg-emerald-400 rounded-full hidden sm:block" />
+                    <div className="flex-1">
+                      <h3 className="text-white font-bold">{edu.school}</h3>
+                      <p className="text-slate-400 text-sm mt-0.5">{edu.degree}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-emerald-400 text-sm font-mono">{edu.info}</p>
+                      <p className="text-slate-500 text-xs mt-0.5">{edu.location}</p>
+                    </div>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </FadeIn>
+        </section>
 
-        {/* Training Section */}
-        <motion.section
-          id="training"
-          className="mb-24"
-          {...fadeInUp}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-slate-900 dark:text-white">
-            Summer Training
-          </h2>
-          <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8">
-            <h3 className="font-bold text-blue-600 dark:text-blue-400 text-lg mb-2">
-              Full Stack Development in React & Node
-            </h3>
-            <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
-              Centre for Professional Enhancement, LPU (June 2025 – July 2025)
-            </p>
-            <ul className="space-y-3 mb-6">
-              {[
-                "Instructor-led course covering web development with React.js and Node.js.",
-                "Built dynamic front-end interfaces and implemented RESTful APIs using Express.",
-                "Gained exposure to databases, API integration, version control, and deployment fundamentals.",
-              ].map((point, idx) => (
-                <li
-                  key={idx}
-                  className="text-slate-700 dark:text-slate-300 flex items-start gap-3"
+        {/* ── TRAINING ── */}
+        <section id="training" className="mb-28">
+          <FadeIn>
+            <SectionHeading label="06 / training" title="Summer Training" />
+            <div className="border border-slate-800 bg-slate-900/40 rounded-sm p-7 backdrop-blur-sm">
+              <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <h3 className="text-white font-bold text-lg">
+                    Full Stack Development in React & Node
+                  </h3>
+                  <p className="text-slate-500 text-sm mt-1">
+                    Centre for Professional Enhancement, LPU · June – July 2025
+                  </p>
+                </div>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="border-slate-600 hover:border-emerald-400 hover:text-emerald-400 bg-transparent rounded-none text-slate-400 text-xs gap-1.5"
                 >
-                  <span className="text-blue-600 dark:text-blue-400 mt-1">
-                    •
-                  </span>
-                  {point}
-                </li>
-              ))}
-            </ul>
-            <Button asChild size="sm" variant="outline" className="gap-2">
-              <Link
-                href="https://onedrive.live.com/?cid=840bef1d2d63f0b9&id=840BEF1D2D63F0B9%21s27c69c51e5874d33b8a1f13b38d6372b&resid=840BEF1D2D63F0B9%21s27c69c51e5874d33b8a1f13b38d6372b&ithint=file%2Cpdf&e=OM7KQP&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2IvYy84NDBiZWYxZDJkNjNmMGI5L0lRQlJuTVluaC1VelRiaWg4VHM0MWpjckFRNFd5SXlEWTNqUVg5RmhaS2NjZng4P2U9T003S1FQ&v=validatepermission"
-                target="_blank"
-              >
-                <FileText size={16} /> Training Certificate
-              </Link>
-            </Button>
-          </div>
-        </motion.section>
+                  <Link
+                    href="https://onedrive.live.com/?cid=840bef1d2d63f0b9&id=840BEF1D2D63F0B9%21s27c69c51e5874d33b8a1f13b38d6372b&resid=840BEF1D2D63F0B9%21s27c69c51e5874d33b8a1f13b38d6372b&ithint=file%2Cpdf&e=OM7KQP&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2IvYy84NDBiZWYxZDJkNjNmMGI5L0lRQlJuTVluaC1VelRiaWg4VHM0MWpjckFRNFd5SXlEWTNqUVg5RmhaS2NjZng4P2U9T003S1FQ&v=validatepermission"
+                    target="_blank"
+                  >
+                    <FileText size={13} /> Certificate
+                  </Link>
+                </Button>
+              </div>
+              <ul className="space-y-2.5">
+                {[
+                  "Instructor-led course covering web development with React.js and Node.js.",
+                  "Built dynamic front-end interfaces and implemented RESTful APIs using Express.",
+                  "Gained exposure to databases, API integration, version control, and deployment fundamentals.",
+                ].map((point, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-slate-400">
+                    <ChevronRight size={14} className="text-emerald-400 mt-0.5 shrink-0" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </FadeIn>
+        </section>
 
-        {/* Contact Section */}
-        <motion.section
-          id="contact"
-          className="mb-12 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-8 sm:p-10"
-          {...fadeInUp}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-slate-900 dark:text-white">
-            Get In Touch
-          </h2>
-          <div className="space-y-4 mb-6">
-            {[
-              {
-                icon: <Mail size={20} />,
-                label: "Email",
-                href: "mailto:rishabhyadavunnao@gmail.com",
-                text: "rishabhyadavunnao@gmail.com",
-              },
-              {
-                icon: <Linkedin size={20} />,
-                label: "LinkedIn",
-                href: "https://www.linkedin.com/in/rishabhydv23/",
-                text: "linkedin.com/in/rishabhydv23",
-              },
-              {
-                icon: <Github size={20} />,
-                label: "GitHub",
-                href: "https://github.com/rishabh-ydv23",
-                text: "github.com/rishabh-ydv23",
-              },
-            ].map((contact, idx) => (
-              <motion.a
-                key={idx}
-                href={contact.href}
-                target="_blank"
-                className="flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <span className="text-blue-600 dark:text-blue-400">
-                  {contact.icon}
-                </span>
-                {contact.text}
-              </motion.a>
-            ))}
-          </div>
-          <Button asChild className="gap-2">
-            <Link
-              href="https://docs.google.com/document/d/1FiwIMMx5VnvLdUpMgC-XZovc_bzwvXkL/edit?usp=sharing&ouid=102825018389697368109&rtpof=true&sd=true"
-              target="_blank"
-            >
-              <FileText size={16} /> View Full Resume
-            </Link>
-          </Button>
-        </motion.section>
+        {/* ── CONTACT ── */}
+        <section id="contact" className="mb-16">
+          <FadeIn>
+            <SectionHeading label="07 / contact" title="Get In Touch" />
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div className="border border-slate-800 bg-slate-900/40 rounded-sm p-7 backdrop-blur-sm">
+                <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                  I&apos;m currently open to internship and entry-level software
+                  engineering roles. If you have an opportunity or just want to
+                  connect, my inbox is always open.
+                </p>
+                <div className="space-y-4">
+                  {[
+                    {
+                      icon: <Mail size={16} />,
+                      text: "rishabhyadavunnao@gmail.com",
+                      href: "mailto:rishabhyadavunnao@gmail.com",
+                    },
+                    {
+                      icon: <Linkedin size={16} />,
+                      text: "linkedin.com/in/rishabhydv23",
+                      href: "https://www.linkedin.com/in/rishabhydv23/",
+                    },
+                    {
+                      icon: <Github size={16} />,
+                      text: "github.com/rishabh-ydv23",
+                      href: "https://github.com/rishabh-ydv23",
+                    },
+                  ].map((c, i) => (
+                    <a
+                      key={i}
+                      href={c.href}
+                      target="_blank"
+                      className="flex items-center gap-3 text-sm text-slate-400 hover:text-emerald-400 transition-colors group"
+                    >
+                      <span className="text-emerald-400">{c.icon}</span>
+                      {c.text}
+                      <ArrowUpRight
+                        size={13}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity ml-auto"
+                      />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="border border-slate-800 bg-slate-900/40 rounded-sm p-7 backdrop-blur-sm flex flex-col justify-between">
+                <div>
+                  <p className="text-emerald-400 text-xs tracking-widest uppercase mb-3">
+                    resume
+                  </p>
+                  <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                    View or download my full resume to see my complete work
+                    history, projects, and certifications.
+                  </p>
+                </div>
+                <Button
+                  asChild
+                  className="bg-emerald-400 text-black hover:bg-emerald-300 font-bold rounded-none h-11 text-sm tracking-wide w-full justify-center gap-2 transition-all"
+                >
+                  <Link
+                    href="https://docs.google.com/document/d/1FiwIMMx5VnvLdUpMgC-XZovc_bzwvXkL/edit?usp=sharing&ouid=102825018389697368109&rtpof=true&sd=true"
+                    target="_blank"
+                  >
+                    <FileText size={15} /> View Full Resume
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </FadeIn>
+        </section>
+
+        {/* ── FOOTER ── */}
+        <footer className="border-t border-slate-800 pt-8 pb-4 text-center">
+          <p className="text-xs text-slate-600 font-mono">
+            © {new Date().getFullYear()} Rishabh Yadav · Built with Next.js & Tailwind CSS
+          </p>
+        </footer>
       </div>
     </main>
   );
