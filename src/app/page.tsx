@@ -204,19 +204,19 @@ const education = [
   {
     school: "Lovely Professional University",
     degree: "B.Tech — Computer Science & Engineering",
-    info: "CGPA: 7.23  ·  2023 – Present",
+    info: "2023 – Present",
     location: "Punjab, India",
   },
   {
     school: "U.S International School",
     degree: "Intermediate (Class XII)",
-    info: "72.8%  ·  2021 – 2022",
+    info: "2021 – 2022",
     location: "Bhagwant Nagar, Unnao",
   },
   {
     school: "U.S International School",
     degree: "Matriculation (Class X)",
-    info: "75.8%  ·  2019 – 2020",
+    info: "2019 – 2020",
     location: "Bhagwant Nagar, Unnao",
   },
 ];
