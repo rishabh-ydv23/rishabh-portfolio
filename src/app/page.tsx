@@ -428,6 +428,15 @@ export default function Home() {
                 >
                   <a href="#contact">Contact Me</a>
                 </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-slate-600 text-slate-300 hover:border-emerald-400 hover:text-emerald-400 bg-transparent rounded-none px-6 h-11 text-sm tracking-wide transition-all gap-2"
+                >
+                  <a href="https://docs.google.com/document/d/1FiwIMMx5VnvLdUpMgC-XZovc_bzwvXkL/edit" target="_blank">
+                    <FileText size={16} /> Resume
+                  </a>
+                </Button>
               </motion.div>
             </div>
 
