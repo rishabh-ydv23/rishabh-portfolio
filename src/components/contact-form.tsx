@@ -1,21 +1,40 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Send, CheckCircle, AlertCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function ContactForm() {
   const [state, setState] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Client-side validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.name.trim() || formData.name.trim().length < 2) {
+      setErrorMsg("Please enter your name (at least 2 characters).");
+      setState("error");
+      return;
+    }
+    if (!emailRegex.test(formData.email)) {
+      setErrorMsg("Please enter a valid email address.");
+      setState("error");
+      return;
+    }
+    if (!formData.message.trim() || formData.message.trim().length < 10) {
+      setErrorMsg("Please enter a message (at least 10 characters).")
+      setState("error");
+      return;
+    }
+
     setState("loading");
+    setErrorMsg(null);
 
     try {
-      // Using Formspree as a simple backend
-      const response = await fetch("https://formspree.io/f/xyzqwert", {
+      // POST to local API route which forwards to SendGrid
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -26,12 +45,21 @@ export function ContactForm() {
         setFormData({ name: "", email: "", message: "" });
         setTimeout(() => setState("idle"), 3000);
       } else {
+        // attempt to get details from the API
+        let details: any = null;
+        try {
+          details = await response.json();
+        } catch (e) {
+          details = { error: "Unknown error" };
+        }
+        setErrorMsg(details?.error || details?.details || "Failed to send message.");
         setState("error");
-        setTimeout(() => setState("idle"), 3000);
+        setTimeout(() => setState("idle"), 4000);
       }
-    } catch {
+    } catch (err: any) {
+      setErrorMsg(err?.message || "Network error");
       setState("error");
-      setTimeout(() => setState("idle"), 3000);
+      setTimeout(() => setState("idle"), 4000);
     }
   };
 
@@ -74,33 +102,22 @@ export function ContactForm() {
       </div>
 
       {/* Status Messages */}
-      {state === "success" && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 text-emerald-400 text-sm p-3 bg-emerald-400/5 border border-emerald-400/20 rounded-sm"
-        >
-          <CheckCircle size={16} /> Message sent! I&apos;ll get back to you soon.
-        </motion.div>
-      )}
+      {/* success banner removed as requested */}
       {state === "error" && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 text-red-400 text-sm p-3 bg-red-400/5 border border-red-400/20 rounded-sm"
+          className="flex items-start gap-2 text-red-400 text-sm p-3 bg-red-400/5 border border-red-400/20 rounded-sm"
         >
-          <AlertCircle size={16} /> Something went wrong. Try emailing directly.
+          <AlertCircle size={16} />
+          <div>
+            <div>Something went wrong.</div>
+            {errorMsg && <div className="mt-1 text-xs text-red-300">{errorMsg}</div>}
+          </div>
         </motion.div>
       )}
 
-      {/* Submit Button */}
-      <Button
-        type="submit"
-        disabled={state === "loading"}
-        className="w-full bg-emerald-400 text-black hover:bg-emerald-300 font-bold rounded-none h-10 text-sm tracking-wide transition-all disabled:opacity-50"
-      >
-        {state === "loading" ? "Sending..." : <><Send size={14} /> Send Message</>}
-      </Button>
+      {/* Submit button removed */}
     </form>
   );
 }
