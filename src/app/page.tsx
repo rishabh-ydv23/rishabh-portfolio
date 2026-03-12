@@ -196,11 +196,11 @@ const PROJECT_CATS = [
 ];
 
 const certifications = [
-  { org: "Oracle", name: "OCI 2025 Certified Generative AI Professional" },
-  { org: "Apna College", name: "Delta Batch – Full Stack Development" },
-  { org: "Oracle", name: "OCI 2025 Certified AI Foundation Associate" },
-  { org: "NPTEL / IIT KGP", name: "Cloud Computing (8-week course)" },
-  { org: "IBM", name: "Introduction to Hardware and Operating Systems" },
+  { org: "Oracle", name: "OCI 2025 Certified Generative AI Professional", link: "https://1drv.ms/b/c/840bef1d2d63f0b9/IQC-ym04dwasSLS7Z1xaDIigARg8wZuI1LYUPmfX35vvlh8?e=Z8peEX" },
+  { org: "Apna College", name: "Delta Batch – Full Stack Development", link: "https://1drv.ms/b/c/840bef1d2d63f0b9/IQDihJtUO_XBQ5Var_kuM2vuAT73Hlvmv1z25QKg3nSq13A?e=heJcBy" },
+  { org: "Oracle", name: "OCI 2025 Certified AI Foundation Associate", link: "https://1drv.ms/b/c/840bef1d2d63f0b9/IQCAbrv2mOBiQ4wc72IfxpD5ATtO--BkO-hy-hojEiP3DWI?e=txibuU" },
+  { org: "NPTEL / IIT KGP", name: "Cloud Computing (8-week course)", link: "https://1drv.ms/b/c/840bef1d2d63f0b9/IQA__zyyh1JCSK1009BchXPeAb1yGbbqjAHjmYVSS97F_z0?e=bkvfvd" },
+  { org: "IBM", name: "Introduction to Hardware and Operating Systems", link: "https://1drv.ms/b/c/840bef1d2d63f0b9/IQBHdA0hoeyNSJjvb7TjwznSARhkNOE7JkN6xf9Xoo78UNw?e=98IMVd" },
 ];
 
 const education = [
@@ -602,15 +602,21 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.08 }}
                   viewport={{ once: false }}
-                  className="flex items-center justify-between gap-4 px-6 py-4 hover:bg-slate-800/40 transition-colors"
+                  className="flex items-center gap-4 px-6 py-4 hover:bg-slate-800/40 transition-colors"
                 >
-                  <div className="flex items-center gap-4">
-                    <ChevronRight size={14} className="text-emerald-400 shrink-0" />
-                    <span className="text-slate-200 text-sm">{cert.name}</span>
+                  <ChevronRight size={14} className="text-emerald-400 shrink-0" />
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <a
+                      href={cert.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-slate-200 text-sm hover:text-emerald-400 transition-all duration-200 underline decoration-emerald-400/50 hover:decoration-emerald-400 underline-offset-4 font-medium"
+                    >
+                      {cert.name}
+                    </a>
+                    <span className="text-slate-600 text-sm">•</span>
+                    <span className="text-slate-500 text-sm italic">{cert.org}</span>
                   </div>
-                  <span className="text-xs text-slate-500 shrink-0 border border-slate-700 px-2.5 py-0.5 rounded-sm">
-                    {cert.org}
-                  </span>
                 </motion.div>
               ))}
             </div>
