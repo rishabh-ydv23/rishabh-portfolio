@@ -602,21 +602,22 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.08 }}
                   viewport={{ once: false }}
-                  className="flex items-center gap-4 px-6 py-4 hover:bg-slate-800/40 transition-colors"
+                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 hover:bg-slate-800/40 transition-colors"
                 >
-                  <ChevronRight size={14} className="text-emerald-400 shrink-0" />
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <a
-                      href={cert.link}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-slate-200 text-sm hover:text-emerald-400 transition-all duration-200 underline decoration-emerald-400/50 hover:decoration-emerald-400 underline-offset-4 font-medium"
-                    >
-                      {cert.name}
-                    </a>
-                    <span className="text-slate-600 text-sm">•</span>
-                    <span className="text-slate-500 text-sm italic">{cert.org}</span>
+                  <div className="flex-1">
+                    <h3 className="text-white font-bold text-sm mb-1">{cert.name}</h3>
+                    <p className="text-slate-500 text-sm">{cert.org}</p>
                   </div>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="border-slate-600 hover:border-emerald-400 hover:text-emerald-400 bg-transparent rounded-none text-slate-400 text-xs gap-1.5 shrink-0"
+                  >
+                    <Link href={cert.link} target="_blank">
+                      <FileText size={13} /> Certificate
+                    </Link>
+                  </Button>
                 </motion.div>
               ))}
             </div>
