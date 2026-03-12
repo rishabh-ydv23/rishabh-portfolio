@@ -594,19 +594,20 @@ export default function Home() {
         <section id="certifications" className="mb-28">
           <FadeIn>
             <SectionHeading label="04 / certifications" title="Certifications" />
-            <div className="border border-slate-800 bg-slate-900/40 rounded-sm divide-y divide-slate-800 backdrop-blur-sm">
+            <div className="space-y-4">
               {certifications.map((cert, idx) => (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, x: -16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.08 }}
                   viewport={{ once: false }}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 hover:bg-slate-800/40 transition-colors"
+                  className="border border-slate-800 hover:border-slate-700 bg-slate-900/40 hover:bg-slate-900/60 transition-all p-6 rounded-sm flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6"
                 >
+                  <div className="shrink-0 w-1 h-10 bg-emerald-400 rounded-full hidden sm:block" />
                   <div className="flex-1">
-                    <h3 className="text-white font-bold text-sm mb-1">{cert.name}</h3>
-                    <p className="text-slate-500 text-sm">{cert.org}</p>
+                    <h3 className="text-white font-bold text-lg">{cert.name}</h3>
+                    <p className="text-slate-500 text-sm mt-1">{cert.org}</p>
                   </div>
                   <Button
                     asChild
