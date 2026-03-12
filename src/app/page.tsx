@@ -784,7 +784,7 @@ export default function Home() {
         {/* ── TIMELINE ── */}
         <section id="timeline" className="mb-28">
           <FadeIn>
-            <SectionHeading label="09 / timeline" title="My Journey" />
+            <SectionHeading label="09 / timeline" title="Academic & Professional Journey" />
             <div className="space-y-0">
               {timeline.map((item, idx) => (
                 <motion.div
