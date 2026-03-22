@@ -482,6 +482,43 @@ export default function Home() {
                   </Button>
                 </motion.div>
               </motion.div>
+
+              {/* ── Social Links ── */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+                className="flex items-center gap-4 mt-8"
+              >
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="https://github.com/rishabh-ydv23"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-[50px] h-[50px] flex items-center justify-center rounded-2xl border border-slate-700/50 text-slate-400 hover:text-emerald-400 hover:border-emerald-400/50 hover:bg-emerald-400/10 transition-all bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-sm"
+                >
+                  <Github size={22} />
+                </motion.a>
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="https://www.linkedin.com/in/rishabhydv23/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-[50px] h-[50px] flex items-center justify-center rounded-2xl border border-slate-700/50 text-slate-400 hover:text-emerald-400 hover:border-emerald-400/50 hover:bg-emerald-400/10 transition-all bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-sm"
+                >
+                  <Linkedin size={22} />
+                </motion.a>
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="mailto:rishabhyadavunnao@gmail.com"
+                  className="w-[50px] h-[50px] flex items-center justify-center rounded-2xl border border-slate-700/50 text-slate-400 hover:text-emerald-400 hover:border-emerald-400/50 hover:bg-emerald-400/10 transition-all bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-sm"
+                >
+                  <Mail size={22} />
+                </motion.a>
+              </motion.div>
             </div>
 
             {/* ── Right: photo ── */}
