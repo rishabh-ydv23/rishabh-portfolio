@@ -476,8 +476,8 @@ export default function Home() {
                     variant="outline"
                     className="border-slate-600 text-slate-700 dark:text-slate-300 hover:border-emerald-400 hover:text-emerald-600 dark:text-emerald-400 bg-slate-100/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-xl px-6 h-11 text-sm tracking-wide transition-all gap-2"
                   >
-                    <a href="https://docs.google.com/document/d/1FiwIMMx5VnvLdUpMgC-XZovc_bzwvXkL/edit" target="_blank">
-                      <FileText size={16} /> Resume
+                    <a href="https://docs.google.com/document/d/1FiwIMMx5VnvLdUpMgC-XZovc_bzwvXkL/export?format=pdf" target="_blank" download>
+                      <FileText size={16} /> Download Resume
                     </a>
                   </Button>
                 </motion.div>
