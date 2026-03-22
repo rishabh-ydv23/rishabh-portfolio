@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 
 const navLinks = [
   { href: "#about", label: "about" },
@@ -63,7 +63,14 @@ export default function NavbarClient() {
         </div>
 
         {/* Right side (Theme Toggle + Mobile Menu Toggle) */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <a
+            href="https://docs.google.com/document/d/1FiwIMMx5VnvLdUpMgC-XZovc_bzwvXkL/export?format=pdf"
+            download
+            className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-semibold shadow-md transition-all hover:scale-105 active:scale-95"
+          >
+            <Download size={16} /> Resume
+          </a>
           <ThemeToggle />
           <button
             className="sm:hidden text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:text-emerald-400 transition-colors"
