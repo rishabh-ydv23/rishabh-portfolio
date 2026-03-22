@@ -740,13 +740,16 @@ export default function Home() {
             <SectionHeading label="05 / achievements" title="Achievements" />
             <div className="grid gap-4 sm:grid-cols-2">
               {/* DSA Card */}
-              <motion.div
+              <motion.a
+                href="https://codolio.com/profile/rishabhydv23"
+                target="_blank"
+                rel="noreferrer"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ y: -5, scale: 1.02 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.4 }}
-                className="border border-slate-200 dark:border-slate-800 hover:border-emerald-400/40 bg-slate-100/40 dark:bg-slate-900/40 hover:bg-slate-100/70 dark:bg-slate-900/70 transition-all duration-300 p-6 rounded-2xl backdrop-blur-md shadow-sm hover:shadow-emerald-400/10"
+                className="block border border-slate-200 dark:border-slate-800 hover:border-emerald-400/40 bg-slate-100/40 dark:bg-slate-900/40 hover:bg-slate-100/70 dark:bg-slate-900/70 transition-all duration-300 p-6 rounded-2xl backdrop-blur-md shadow-sm hover:shadow-emerald-400/10 cursor-pointer"
               >
                 <div className="flex items-start gap-4">
                   <div className="shrink-0 w-12 h-12 border border-emerald-500/30 dark:border-emerald-400/30 bg-emerald-50 dark:bg-emerald-400/10 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-mono font-bold text-sm">
@@ -766,15 +769,18 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </motion.a>
               {/* HackerRank Stars Card */}
-              <motion.div
+              <motion.a
+                href="https://www.hackerrank.com/profile/rishabhydv23"
+                target="_blank"
+                rel="noreferrer"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ y: -5, scale: 1.02 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="border border-slate-200 dark:border-slate-800 hover:border-amber-400/40 bg-slate-100/40 dark:bg-slate-900/40 hover:bg-slate-100/70 dark:bg-slate-900/70 transition-all duration-300 p-6 rounded-2xl backdrop-blur-md shadow-sm hover:shadow-amber-400/10"
+                className="block border border-slate-200 dark:border-slate-800 hover:border-amber-400/40 bg-slate-100/40 dark:bg-slate-900/40 hover:bg-slate-100/70 dark:bg-slate-900/70 transition-all duration-300 p-6 rounded-2xl backdrop-blur-md shadow-sm hover:shadow-amber-400/10 cursor-pointer"
               >
                 <div className="flex items-start gap-4">
                   <div className="shrink-0 w-12 h-12 border border-amber-400/30 bg-amber-400/10 rounded-xl flex items-center justify-center text-amber-400 font-bold text-xl drop-shadow-sm">
@@ -801,7 +807,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </motion.a>
             </div>
           </FadeIn>
         </section>

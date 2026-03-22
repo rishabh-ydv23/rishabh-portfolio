@@ -26,10 +26,11 @@ export default function NavbarClient() {
         {/* Logo / brand */}
         <a
           href="#"
-          className="text-emerald-600 dark:text-emerald-400 font-bold text-sm tracking-widest hover:text-emerald-300 transition-colors flex items-center gap-2 relative group"
+          className="text-slate-800 dark:text-slate-200 font-bold text-xl tracking-wider hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center relative group font-mono"
         >
-          <span className="text-slate-600 group-hover:text-emerald-600 dark:text-emerald-400 transition-colors">&gt;</span> ry
-          <span className="animate-pulse text-emerald-600 dark:text-emerald-400 group-hover:opacity-100 opacity-80">_</span>
+          <span className="text-emerald-500 mr-0.5 opacity-80 group-hover:opacity-100 transition-opacity">&lt;</span>
+          Rishabh
+          <span className="text-emerald-500 ml-0.5 opacity-80 group-hover:opacity-100 transition-opacity">/&gt;</span>
         </a>
 
         {/* Links - Desktop */}
