@@ -183,22 +183,12 @@ const allProjectsData = [
     live: "https://ecommerce-website-green-six.vercel.app/",
     github: "https://github.com/rishabh-ydv23/Forever-Ecommerce-website",
   },
-  {
-    category: "experiments",
-    label: "Experiments",
-    title: "Param Portfolio",
-    description: "A personal portfolio website built for a friend, showcasing their work and skills with a clean modern design.",
-    tech: ["React.js", "Tailwind CSS", "Framer Motion"],
-    live: "https://param-portfolio-one.vercel.app/",
-    github: "https://github.com/rishabh-ydv23/paramPortfolio",
-  },
 ];
 
 const PROJECT_CATS = [
   { key: "all", label: "All" },
   { key: "personal", label: "Personal" },
   { key: "client-work", label: "Client Work" },
-  { key: "experiments", label: "Experiments" },
 ];
 
 const certifications = [
