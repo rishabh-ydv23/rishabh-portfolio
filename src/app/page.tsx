@@ -168,15 +168,6 @@ const allProjectsData = [
   {
     category: "personal",
     label: "Personal",
-    title: "Rishabh Portfolio",
-    description: "Personal developer portfolio built with Next.js, Tailwind CSS, and Framer Motion showcasing projects, freelance work, and technical skills.",
-    tech: ["Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
-    live: "",
-    github: "https://github.com/rishabh-ydv23/rishabh-portfolio",
-  },
-  {
-    category: "personal",
-    label: "Personal",
     title: "Forever E-Commerce",
     description: "A responsive clothing e-commerce website featuring product collections, detail pages, shopping cart functionality, and a modern UI.",
     tech: ["React.js", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "JWT"],
