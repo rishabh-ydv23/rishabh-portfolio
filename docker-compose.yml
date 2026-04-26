@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  portfolio:
+    build: .
+    ports:
+      - "3000:3000"
+    container_name: rishabh-portfolio
+    restart: unless-stopped
