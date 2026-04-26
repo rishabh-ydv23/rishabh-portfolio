@@ -1,5 +1,5 @@
 # Use Node image
-FROM node:22
+FROM node:18
 
 # Set working directory
 WORKDIR /app
@@ -9,6 +9,9 @@ COPY . .
 
 # Install dependencies
 RUN npm install
+
+# Build Next.js app
+RUN npm run build
 
 # Expose port
 EXPOSE 3000
